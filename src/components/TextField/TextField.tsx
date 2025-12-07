@@ -29,8 +29,11 @@ export const TextField: React.FC<Props> = ({
   const [id] = useState(() => `${name}-${getRandomDigits()}`);
   const [touched, setTouched] = useState(false);
 
-  const isMissing = required && !value;
-  const isInvalid = value.length > 0 && !pattern(value);
+  const trimmedValue = value.trim();
+
+  const isMissing = required && trimmedValue.length === 0;
+  const isInvalid =
+    pattern != null && trimmedValue.length > 0 && !pattern(trimmedValue);
 
   const hasError = touched && (isMissing || isInvalid);
 
